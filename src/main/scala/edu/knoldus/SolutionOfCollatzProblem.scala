@@ -15,27 +15,29 @@ class SolutionOfCollatzProblem {
     }
   }
 
-  def producingListThroughCollatzEquation(element: Int, list: List[Int]): List[Int] = {
+  def producingListThroughCollatzEquation(element: Int,
+      list: List[Int],
+      tList: List[Int]): List[Int] = {
     if (element == 1) {
       if (!(isElementPresent(list, 1))) {
-        1 :: list
+        1 :: list ::: tList
       }
       else {
-        list
+        list ::: tList
       }
     }
     else if (isElementPresent(list, element)) {
-      list
+      list ::: tList
     }
     else if (element % 2 == 0) {
-      val newList = element :: list
+      val newList = element :: tList
       val newElement = element / 2
-      producingListThroughCollatzEquation(newElement, newList)
+      producingListThroughCollatzEquation(newElement, list, newList)
     }
     else {
-      val newList = element :: list
+      val newList = element :: tList
       val newElement = 3 * element + 1
-      producingListThroughCollatzEquation(newElement, newList)
+      producingListThroughCollatzEquation(newElement, list, newList)
     }
   }
 }
@@ -45,13 +47,13 @@ object ApplyCollatzSolution extends App {
   log.info("Hello, here is the Collatz Problem!!\n\n")
   val sol = new SolutionOfCollatzProblem()
   val list = List()
-  val hundred = 70
+  val hundred = 100
   val nineteen = 19
   val seven = 7
-  val newList1 = sol.producingListThroughCollatzEquation(hundred, list)
+  val newList1 = sol.producingListThroughCollatzEquation(hundred, list, list)
   log.info(newList1 + "\n")
-  val newList2 = sol.producingListThroughCollatzEquation(nineteen, newList1)
+  val newList2 = sol.producingListThroughCollatzEquation(nineteen, newList1, list)
   log.info(newList2 + "\n")
-  val newList3 = sol.producingListThroughCollatzEquation(seven, newList2)
+  val newList3 = sol.producingListThroughCollatzEquation(seven, newList2, list)
   log.info(newList3 + "\n")
 }
